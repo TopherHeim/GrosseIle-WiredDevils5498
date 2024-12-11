@@ -162,6 +162,12 @@ public class Swerve extends SubsystemBase {
         mSwerveMods[2].setSpeed2(0.2);
         mSwerveMods[3].setSpeed2(0.2);
     }
+    public void autoZeroWheels() {
+        for (SwerveModule mod : mSwerveMods) {
+            ((SwerveMod) mod).resetToAbsolute(); // Call resetToAbsolute for each module
+        }
+        System.out.println("Auto-zeroing wheels completed.");
+    }
     /* 
     public void autonDrive(double s){
         if (mSwerveMods[0].getModuleNumber() == 0){
