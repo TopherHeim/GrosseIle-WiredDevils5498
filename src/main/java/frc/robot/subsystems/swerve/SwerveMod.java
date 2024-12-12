@@ -93,12 +93,6 @@ public class SwerveMod implements SwerveModule
         
     }
     public void resetToAbsolute() {
-    try {
-        Thread.sleep(200); // Add a 200 ms delay
-    } catch (InterruptedException e) {
-        e.printStackTrace();
-    }
-
  
     double absolutePosition = getCanCoder().getDegrees();  // Get CANCoder absolute position
     double zeroedPosition = absolutePosition - angleOffset.getDegrees();  // Apply offset
