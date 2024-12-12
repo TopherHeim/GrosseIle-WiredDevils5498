@@ -67,7 +67,6 @@ public class RobotContainer {
     private final JoystickButton dampen = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
     private final JoystickButton zeroWheels = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton setIntegratedToZero = new JoystickButton(driver, XboxController.Button.kY.value);
-    private final JoystickButton autoZeroWheels = new JoystickButton(driver, XboxController.Button.kA.value);
     private final POVButton up = new POVButton(driver, 90);
     private final POVButton down = new POVButton(driver, 270);
     private final POVButton right = new POVButton(driver, 180);
@@ -98,7 +97,8 @@ public class RobotContainer {
                 () -> false,
                 () -> dampen.getAsBoolean(),
                 () -> 1, //speed multiplier 
-                () -> zeroWheels.getAsBoolean() 
+                () -> zeroWheels.getAsBoolean(),
+		() -> setIntegratedToZero.getAsBoolean()
             )
         );
         // Comment these out when testing drive// 
@@ -166,15 +166,6 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        // Bind Y button to set integrated encoders to zeroed positions
-        setIntegratedToZero.onTrue(new InstantCommand(() -> {
-            s_Swerve.zeroModules(); // Call the zeroing function for each module
-        }, s_Swerve));
-
-        // Bind A button to auto zero the wheels
-        autoZeroWheels.onTrue(new InstantCommand(() -> {
-            s_Swerve.autoZeroWheels(); // Custom function to auto zero wheels
-        }, s_Swerve));
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
 
 
