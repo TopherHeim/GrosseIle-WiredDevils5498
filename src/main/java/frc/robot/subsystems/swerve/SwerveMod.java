@@ -96,6 +96,13 @@ public class SwerveMod implements SwerveModule
  
     double absolutePosition = getCanCoder().getDegrees();  // Get CANCoder absolute position
     double zeroedPosition = absolutePosition - angleOffset.getDegrees();  // Apply offset
+    // Adjust zeroed position to match the range of the relative encoder (-180 to +180)
+    if (zeroedPosition > 180) {
+        zeroedPosition -= 360;
+    } else if (zeroedPosition < -180) {
+        zeroedPosition += 360;
+    }
+
     relAngleEncoder.setPosition(zeroedPosition);  // Reset motor encoder position
 
     System.out.println("Module " + moduleNumber + ": Reset to Absolute -> CANCoder = " + absolutePosition 
