@@ -24,10 +24,11 @@ public class TeleopSwerve extends Command {
     private BooleanSupplier dampen;
     private DoubleSupplier speedDial;
     private BooleanSupplier zero;
+    private BooleanSupplier integratedZero;
 
     private PIDController rotationController;
 
-    public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, BooleanSupplier dampen, DoubleSupplier speedDial, BooleanSupplier zero) {
+    public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, BooleanSupplier dampen, DoubleSupplier speedDial, BooleanSupplier zero, BooleanSupplier integratedZero) {
         this.s_Swerve = s_Swerve;
         this.zero = zero;
         addRequirements(s_Swerve);
