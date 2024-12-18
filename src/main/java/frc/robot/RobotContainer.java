@@ -3,6 +3,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -18,6 +20,15 @@ import frc.robot.subsystems.ArmStuff.Shooter;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.pathfinding.Pathfinding;
+import com.pathplanner.lib.util.PPLibTelemetry;
+import com.pathplanner.lib.util.PathPlannerLogging;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -27,6 +38,9 @@ import edu.wpi.first.cscore.UsbCamera;
  */
 public class RobotContainer {
     
+
+    private final SendableChooser<Command> autoChooser;
+
     /* Swerve SubSystem */
     public Swerve getSwerveSubsystem(){
         return s_Swerve;
@@ -86,8 +100,10 @@ public class RobotContainer {
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
+        
         camera1 = CameraServer.startAutomaticCapture(0);
         camera2 = CameraServer.startAutomaticCapture(1);
+        autoChooser = AutoBuilder.buildAutoChooser();
 
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
@@ -101,6 +117,10 @@ public class RobotContainer {
                 () -> zeroWheels.getAsBoolean() 
             )
         );
+
+
+        SmartDashboard.putData("Auto Chooser", autoChooser);
+        
         // Comment these out when testing drive// 
         /* 
         shooter.setDefaultCommand(
@@ -148,7 +168,7 @@ public class RobotContainer {
         );
         */
         
-
+        
         
 
 
@@ -204,7 +224,8 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return null;
+        return autoChooser.getSelected();
     }
+    
     
 }
