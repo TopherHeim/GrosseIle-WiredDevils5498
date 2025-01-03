@@ -54,7 +54,7 @@ public class Swerve extends SubsystemBase {
         lightFr = new Relay(0);
         lightFl = new Relay(1);
         lightBr = new Relay(2);
-        lightBl = new Relay(3);w
+        lightBl = new Relay(3);
         lightFl.set(Value.kOn);
 
         
